@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>AR Campus Tour | Tur Kampus Interaktif</title>
+
+    <link rel="icon" type="image/png" href="./assets/images/title.png">
+    <link rel="stylesheet" href="./src/style.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./vendor/three/three.module.js",
+            "three/addons/": "./vendor/three/addons/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">AR</div>
+            <div>
+                <h2>Campus Tour</h2>
+                <span>Interactive Indoor Experience</span>
+            </div>
+        </div>
+
+        <div class="header-status">
+            <span class="status-dot"></span>
+            <span id="status" data-state="idle">Belum dimulai</span>
+        </div>
+    </header>
+
+    <!-- TOMBOL KEMBALI (hanya tampil di mode kamera) -->
+    <button id="back-btn" type="button" hidden aria-label="Kembali ke halaman sebelumnya">
+        <span>←</span> Kembali
+    </button>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+
+        <!-- INTRODUCTION -->
+        <section class="welcome-section">
+            <div class="welcome-text">
+                <span class="eyebrow">AUGMENTED REALITY EXPERIENCE</span>
+                <h1>Jelajahi Kampus<br>
+                    dengan <span>Augmented Reality</span>
+                </h1>
+                <p>
+                    Kenali berbagai ruangan di lingkungan kampus melalui
+                    pengalaman tur interaktif berbasis teknologi Augmented Reality.
+                </p>
+
+                <div id="home-progress" class="home-progress">0 dari 3 titik dikunjungi</div>
+
+                <button id="openConsent" class="cta-btn" type="button">
+                    Jelajahi Sekarang <span>→</span>
+                </button>
+            </div>
+
+            <div class="welcome-decoration">
+                <div class="circle circle-one"></div>
+                <div class="circle circle-two"></div>
+                <div class="ar-symbol">AR</div>
+            </div>
+        </section>
+
+        <!-- TOUR CONTENT -->
+        <section class="tour-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">LIVE EXPERIENCE</span>
+                    <h2>AR Campus Scanner</h2>
+                    <p>Arahkan kamera ke marker untuk memulai eksplorasi.</p>
+                </div>
+
+                <div class="scan-label">
+                    <span class="scan-indicator"></span>
+                    Image Tracking
+                </div>
+            </div>
+
+            <!-- CAMERA AREA -->
+            <div class="camera-card">
+
+                <div id="container">
+
+                    <div class="camera-placeholder">
+                        <div class="scan-frame">
+                            <span class="corner top-left"></span>
+                            <span class="corner top-right"></span>
+                            <span class="corner bottom-left"></span>
+                            <span class="corner bottom-right"></span>
+
+                            <div class="scan-icon">⌖</div>
+                            <p>Area pemindaian AR</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="camera-overlay">
+                    <span class="camera-live-dot"></span>
+                    Kamera AR
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TOUR GUIDE -->
+        <section class="guide-section">
+
+            <div class="guide-heading">
+                <div>
+                    <span class="eyebrow">HOW TO EXPLORE</span>
+                    <h2>Cara Menggunakan AR Tour</h2>
+                </div>
+            </div>
+
+            <div class="guide-grid">
+
+                <div class="guide-card">
+                    <div class="guide-number">01</div>
+                    <div class="guide-icon">📷</div>
+                    <h3>Mulai Kamera</h3>
+                    <p>
+                        Tekan tombol mulai dan berikan izin akses kamera
+                        pada perangkat.
+                    </p>
+                </div>
+
+                <div class="guide-card">
+                    <div class="guide-number">02</div>
+                    <div class="guide-icon">🎯</div>
+                    <h3>Pindai Marker</h3>
+                    <p>
+                        Arahkan kamera ke gambar penanda yang ditempel di
+                        pintu lab, papan, dan ruang dosen.
+                    </p>
+                </div>
+
+                <div class="guide-card">
+                    <div class="guide-number">03</div>
+                    <div class="guide-icon">🧊</div>
+                    <h3>Jelajahi AR</h3>
+                    <p>
+                        Lihat objek 3D, animasi, dan informasi mengenai
+                        tempat yang berhasil dikenali.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>AR Campus Tour &copy; 2026</p>
+            <span>Explore • Discover • Experience</span>
+        </footer>
+
+    </main>
+
+    <!-- PROGRES TOUR (hanya tampil di mode kamera) -->
+    <aside id="tour-progress" class="collapsed" hidden>
+        <button id="progress-toggle" type="button" aria-expanded="false">
+            <span id="progress-text">0 dari 3 titik dikunjungi</span>
+            <span class="chev">▾</span>
+        </button>
+
+        <div id="progress-details">
+            <progress id="progress-bar" value="0" max="3"></progress>
+            <ul id="poi-list"></ul>
+            <p id="next-hint"></p>
+            <div id="badge" hidden>🏆 Selamat! Semua titik sudah dikunjungi.</div>
+            <button id="reset-btn" type="button">Reset progres</button>
+        </div>
+    </aside>
+
+    <!-- PANEL INFO LOKASI (muncul saat marker terdeteksi) -->
+    <section id="poi-panel" hidden>
+        <h2 id="poi-title"></h2>
+        <p id="poi-location"></p>
+        <p id="poi-desc"></p>
+        <p id="poi-schedule"></p>
+    </section>
+
+    <!-- CAMERA CONSENT (tersembunyi sampai tombol Jelajahi diklik) -->
+    <div id="consent" hidden>
+        <div class="consent-card">
+
+            <div class="consent-icon">✦</div>
+
+            <span class="eyebrow">WELCOME TO AR CAMPUS TOUR</span>
+
+            <h1>Mulai Petualanganmu!</h1>
+
+            <p>
+                Siap menjelajahi lingkungan kampus dengan pengalaman
+                Augmented Reality?
+            </p>
+
+            <div class="consent-info">
+                <div>📷</div>
+                <p>
+                    Aplikasi membutuhkan akses kamera untuk mengenali
+                    gambar marker dan menampilkan objek 3D.
+                </p>
+            </div>
+
+            <div class="privacy-note">
+                Privasi: Video kamera diproses di perangkat Anda
+                dan tidak diunggah oleh aplikasi ini.
+            </div>
+
+            <button id="startBtn" type="button">
+                Mulai Eksplorasi <span>→</span>
+            </button>
+
+            <p id="start-error" hidden></p>
+
+            <button id="closeConsent" class="close-btn" type="button">
+                Nanti saja
+            </button>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script type="module" src="./src/image-demo.js"></script>
+
+</body>
+</html>
