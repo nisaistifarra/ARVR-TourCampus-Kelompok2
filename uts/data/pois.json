@@ -1,0 +1,38 @@
+
+{
+  "pois": [
+    {
+      "id": "laboratorium",
+      "name": "Ruang Laboratorium Komputer",
+      "location": "Gedung G Lantai 6, Ruangan 605",
+      "description": "Selamat datang di Ruang Laboratorium. Tempat kegiatan praktikum dan pembelajaran menggunakan peralatan komputer.",
+      "schedule": "Senin - Sabtu",
+      "hint": "Arahkan kamera ke marker Ruang Laboratorium.",
+      "targetIndex": 0,
+      "model": "monitor",
+      "animation": "spin"
+    },
+    {
+      "id": "papan-informasi",
+      "name": "Papan Informasi",
+      "location": "Gedung G Lantai 1",
+      "description": "Papan Informasi menyediakan berbagai informasi penting mengenai kegiatan dan pengumuman kampus.",
+      "schedule": "Senin - Sabtu",
+      "hint": "Arahkan kamera ke marker Papan Informasi.",
+      "targetIndex": 1,
+      "model": "papan",
+      "animation": "swing"
+    },
+    {
+      "id": "ruang-dosen",
+      "name": "Ruang Dosen",
+      "location": "Gedung G Lantai 1",
+      "description": "Ruang Dosen merupakan tempat dosen melakukan aktivitas akademik, konsultasi, dan pelayanan mahasiswa.",
+      "schedule": "Senin - Sabtu",
+      "hint": "Arahkan kamera ke marker Ruang Dosen.",
+      "targetIndex": 2,
+      "model": "toga",
+      "animation": "pulse"
+    }
+  ]
+}
